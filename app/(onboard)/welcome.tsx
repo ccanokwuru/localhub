@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { View, Text } from "../../components/Themed";
+import { View, Text } from "@/components/Themed";
 
 const welcome = () => {
   return (

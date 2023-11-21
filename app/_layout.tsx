@@ -5,10 +5,16 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
+import {
+  SplashScreen,
+  Stack,
+  useNavigation,
+  useRouter,
+  useSegments,
+} from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
-import AuthProvider, { useAuth } from "../providers/AuthProvider";
+import { Alert, useColorScheme } from "react-native";
+import AuthProvider, { useAuth } from "@/providers/AuthProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,7 +31,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -52,16 +58,17 @@ function RootLayoutNav() {
   const { intialized, session } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!intialized) return;
     const inAuth = segments[0] === "auth";
+    const prevRoute = navigation.getState().history?.pop();
+    Alert.alert("Previous Route", JSON.stringify(prevRoute, null, 2));
 
-    session && !inAuth
-      ? router.back()
-      : !session
-      ? router.replace("/login")
-      : null;
+    if (session && !inAuth)
+      router.canGoBack() && prevRoute ? router.back() : router.replace("/");
+    else if (!session) router.replace("/login");
   });
 
   return (
