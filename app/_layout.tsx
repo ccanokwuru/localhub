@@ -5,9 +5,10 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import AuthProvider, { useAuth } from "../providers/AuthProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,14 +49,31 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { intialized, session } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!intialized) return;
+    const inAuth = segments[0] === "auth";
+
+    session && !inAuth
+      ? router.back()
+      : !session
+      ? router.replace("/login")
+      : null;
+  });
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(onboard)" options={{}} />
-        <Stack.Screen name="(auth)" options={{}} />
-        <Stack.Screen name="(secure)" options={{}} />
-      </Stack>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen name="modal" />
+          <Stack.Screen name="(secure)" options={{}} />
+          <Stack.Screen name="(auth)" options={{}} />
+          <Stack.Screen name="(onboard)" options={{}} />
+        </Stack>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

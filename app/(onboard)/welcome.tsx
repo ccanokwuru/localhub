@@ -4,7 +4,7 @@ import { View, Text } from "../../components/Themed";
 const welcome = () => {
   return (
     <View>
-      <Text>welcome</Text>
+      <Text>LOCALHUB</Text>
     </View>
   );
 };
