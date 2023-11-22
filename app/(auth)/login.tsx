@@ -1,5 +1,4 @@
-import { Alert, Button, StyleSheet } from "react-native";
-import { View, Text } from "@/components/Themed";
+import { Alert, Button, StyleSheet, View, Text } from "react-native";
 import { useState } from "react";
 import supabase from "@/utils/supabase.utils";
 

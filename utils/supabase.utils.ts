@@ -13,5 +13,6 @@ const supabase = createClient(supabaseUrl!, supabaseKey!, {
     storage: ExpoSecureStoreAdapter,
   },
 });
+console.log(JSON.stringify(supabase, null, 2));
 
 export default supabase;

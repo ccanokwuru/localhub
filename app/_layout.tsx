@@ -1,9 +1,4 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import {
   SplashScreen,
@@ -15,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { Alert, useColorScheme } from "react-native";
 import AuthProvider, { useAuth } from "@/providers/AuthProvider";
+import { useRoute } from "@react-navigation/native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,33 +50,33 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  const { intialized, session } = useAuth();
+  const { intialized, session, onboard } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const route = useRoute();
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!intialized) return;
-    const inAuth = segments[0] === "auth";
+    // if (!intialized) return;
+    // const inAuth = segments[0] === "(auth)";
     const prevRoute = navigation.getState().history?.pop();
-    Alert.alert("Previous Route", JSON.stringify(prevRoute, null, 2));
+    console.log(JSON.stringify(prevRoute, null, 2));
 
-    if (session && !inAuth)
-      router.canGoBack() && prevRoute ? router.back() : router.replace("/");
-    else if (!session) router.replace("/login");
+    if (route.path === "/" && onboard) router.replace("/home");
+
+    // if (session && !inAuth)
+    //   router.canGoBack() && prevRoute ? router.back() : router.replace("/home");
+    // else if (!session) router.replace("/login");
   });
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen name="modal" />
-          <Stack.Screen name="(secure)" options={{}} />
-          <Stack.Screen name="(auth)" options={{}} />
-          <Stack.Screen name="(onboard)" options={{}} />
-        </Stack>
-      </AuthProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <Stack>
+        <Stack.Screen name="(secure)" options={{}} />
+        <Stack.Screen name="index" redirect options={{}} />
+        {/* <Stack.Screen name="(secure)" redirect options={{}} /> */}
+        {/* <Stack.Screen name="(auth)" redirect options={{}} /> */}
+      </Stack>
+    </AuthProvider>
   );
 }
