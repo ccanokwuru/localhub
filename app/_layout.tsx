@@ -4,7 +4,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 
 // nativewind
-import "constants/global.css";
+import "@/constants/global.css";
 
 export {
   // Catch any errors thrown by the Layout component.

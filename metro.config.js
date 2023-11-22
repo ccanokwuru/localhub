@@ -8,4 +8,4 @@ const config = getDefaultConfig(__dirname, {
   isCSSEnabled: true,
 });
 
-module.exports = withNativeWind(config, { input: "./your-css-file.css" });
+module.exports = withNativeWind(config, { input: "./constants/global.css" });
