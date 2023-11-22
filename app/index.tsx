@@ -1,38 +1,19 @@
 import { tintColorLight } from "@/constants/Colors";
 import { StyleSheet, Text, View } from "react-native";
 
-const welcome = () => {
+const index = () => {
   return (
     <>
-      {/* <View style={styles.container}> */}
-      {/* logo */}
-      <View></View>
-      {/* heading */}
-      <View></View>
-      {/* subheading */}
-      <View></View>
-      {/* </View> */}
+      <View className="flex-1 bg-purple-950 p-20">
+        {/* logo */}
+        <View></View>
+        {/* heading */}
+        <View></View>
+        {/* subheading */}
+        <View></View>
+      </View>
     </>
   );
 };
 
-export default welcome;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: tintColorLight,
-  },
-  logo: {
-    flexGrow: 1,
-  },
-  heading: {
-    fontSize: 32,
-    fontWeight: "500",
-  },
-  subheading: {
-    fontSize: 16,
-    fontWeight: "200",
-  },
-  button: {},
-});
+export default index;
