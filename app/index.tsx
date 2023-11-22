@@ -14,16 +14,17 @@ const index = () => {
   const { width, height } = Dimensions.get("window");
   const router = useRouter();
   return (
-    <>
+    <View className="flex-1">
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        scrollToOverflowEnabled
         className="flex bg-white "
+        overScrollMode="auto"
+        style={{ height: "100%", padding: 20 }}
       >
         <SafeAreaView
-          className="p-10 flex-1 flex"
-          style={{ minHeight: height }}
+          className="flex-1 flex grow"
+          style={{ minHeight: height - 20, padding: 20 }}
         >
           {/* logo */}
           <View className="grow flex justify-center items-center w-full">
@@ -43,7 +44,7 @@ const index = () => {
           <View className="mb-10">
             <Text className="font-extralight" style={{ fontSize: 16 }}>
               This Tool is Designed To Help Any Communnity Grow, Share Resources
-              and Render Assistance
+              and Flourish
             </Text>
           </View>
           <View className="mt-5">
@@ -58,7 +59,7 @@ const index = () => {
           </View>
         </SafeAreaView>
       </ScrollView>
-    </>
+    </View>
   );
 };
 
